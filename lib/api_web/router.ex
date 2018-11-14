@@ -13,49 +13,49 @@ defmodule ApiWeb.Router do
     scope "/v1" do
       scope "/user" do
         # Gets the user’s profile information 
-        get "/:userid", UserController, :test
+        get "/:userid", UserController, :getUser
 
         # Gets the user’s clipboards
-        get "/:userid/clipboards", UserController, :test
+        get "/:userid/clipboards", UserController, :getUserBoards
 
         # Creates a new user
-        post "/:userid", UserController, :test
+        post "/:userid", UserController, :postUser
 
         # Updates a :userid’ profile information
-        put "/:userid", UserController, :test
+        put "/:userid", UserController, :putUser
 
         # Deletes a user from the database
-        delete "/:userid", UserController, :test
+        delete "/:userid", UserController, :deleteUser
       end
 
       scope "/clipboard" do
         # Creates a new clipboard for the user
-        post "/:boardId", BoardController, :test
+        post "/:boardId", BoardController, :postBoard
 
         # Edits the clipboard (say, the clipboard name)
-        put "/:boardId", BoardController, :test
+        put "/:boardId", BoardController, :putBoard
 
         # Gets all items currently in the clipboard
         # needs parameters
         # ?type=mostRecent || type=all
-        get "/:boardId", BoardController, :test
+        get "/:boardId", BoardController, :getBoard
 
         # deletes the associated clipboard
-        delete "/:boardId", BoardController, :test
+        delete "/:boardId", BoardController, :deleteBoard
 
         # Clears the clipboard
-        delete "/:boardID/clear", BoardController, :test
+        delete "/:boardID/clear", BoardController, :clearBoard
 
         # Adds an item to the clipboard
-        post "/:boardId/boarditem", BoardController, :test
+        post "/:boardId/boarditem", BoardController, :postBoardItem
       end
 
       scope "/boarditem" do
         # Gets the item associated with itemID
-        get "/:itemID", ItemController, :test
+        get "/:itemID", ItemController, :getItem
 
         # Removes the board item associated with itemID
-        delete "/:itemID", ItemController, :test
+        delete "/:itemID", ItemController, :deleteItem
       end
 
     end

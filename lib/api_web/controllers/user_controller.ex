@@ -1,21 +1,23 @@
 defmodule ApiWeb.UserController do
     use ApiWeb, :controller
   
-    def index(conn, _params) do
-      IO.inspect conn
-      IO.inspect conn.resp_headers
-      users = []
-      json conn, users
+    def getUser(conn, _params) do
+        json conn, ["getUser"]
     end
   
-    def postTest(conn, _params) do
-      users = []
-      json conn, users
+    def getUserBoards(conn, _params) do
+        json conn, ["getUsersClipboards"]
     end
-  
-    def test(conn, _params) do
-      users = [ "hello"]
-      json conn, users
+
+    def postUser(conn, _params) do
+        json conn, ["postUser"]
     end
-  
+
+    def putUser(conn, _params) do
+        json conn, ["putUser"]
+    end
+
+    def deleteUser(conn, _params) do
+        json conn, ["deleteUser"]
+    end
 end
