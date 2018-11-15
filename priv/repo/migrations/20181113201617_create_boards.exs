@@ -3,10 +3,9 @@ defmodule Api.Repo.Migrations.CreateBoards do
 
   def change do
     create table(:boards, primary_key: false) do
-      add :id, :binary_id, primary_key: true
+      add :id, :serial, primary_key: true
       add :board_name, :string
-      add :created_on, :date
-      add :user_id, references(:users, on_delete: :nothing, type: :binary_id)
+      add :user_id, references(:users, on_delete: :nothing, type: :bigint)
 
       timestamps()
     end

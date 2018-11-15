@@ -3,11 +3,10 @@ defmodule Api.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users, primary_key: false) do
-      add :id, :binary_id, primary_key: true
+      add :id, :serial, primary_key: true
       add :username, :string
       add :password_hash, :string
       add :phone_number, :string
-      add :created_on, :date
 
       timestamps()
     end
