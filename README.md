@@ -19,6 +19,11 @@ Status 200 OK
 ```
 
 #### Error Response
+Status 401 Unauthorized
+``` 
+{ error : 'Unable to verity token' }
+```
+
 Status 404 Content Not Found
 ```
 { error : "user not found" }
@@ -43,6 +48,11 @@ None
 ```
 
 #### Error Response
+Status 401 Unauthorized
+``` 
+{ error : 'Unable to verity token' }
+```
+
 404 Content Not Found
 ```
 { error : "user not found" }
@@ -61,14 +71,18 @@ Creates a new user
 None
 
 #### Success Response
-201 Created
+200 OK
 ```
     { username : <username> }
 ```
 
 #### Error Response
+Status 401 Unauthorized
+``` 
+{ error : 'Unable to verity token' }
+```
 
-400 Bad Request (is this teh corrrect error code?)
+422 Unprocessable Entity 
 ```
     { error : 'invalid username' }
 ```
@@ -97,7 +111,11 @@ None
 204 No Content (if nothing was created)
 
 #### Failure Response
-Any status codes necessary here? either the resource is updated or it isn't?
+Status 401 Unauthorized
+``` 
+{ error : 'Unable to verity token' }
+```
+
 
 
 ### DELETE /v1/user/:userid
@@ -114,6 +132,11 @@ Status 204 No Content
 Does not return a body.
 
 #### Failure Response
+Status 401 Unauthorized
+``` 
+{ error : 'Unable to verity token' }
+```
+
 Status 500 Internal Server Error 
 Does not return a body.
 
@@ -131,14 +154,18 @@ Creates a new clipboard for the user
 None
 
 #### Success Response
-201 Created
+200 OK
 ```
     { boardname : <boardname>, userid: <userid> created_on : <created_on>, id : <board id>}
 ```
 
 #### Error Response
+Status 401 Unauthorized
+``` 
+{ error : 'Unable to verity token' }
+```
 
-400 Bad Request (is this the corrrect error code?)
+422 Unprocessable Entity 
 ```
     { error : 'could not create new board' }
 ```
@@ -162,6 +189,11 @@ None
 204 No Content (if nothing was created)
 
 #### Failure Response
+Status 401 Unauthorized
+``` 
+{ error : 'Unable to verity token' }
+```
+
 Any status codes necessary here? either the resource is updated or it isn't?
 
 
@@ -183,6 +215,11 @@ None
 ```
 
 #### Error Response
+Status 401 Unauthorized
+``` 
+{ error : 'Unable to verity token' }
+```
+
 Status 404 Content Not Found
 ```
 { error : "clipboard not found" }
@@ -203,6 +240,11 @@ Status 204 No Content
 Does not return a body.
 
 #### Failure Response
+Status 401 Unauthorized
+``` 
+{ error : 'Unable to verity token' }
+```
+
 Status 500 Internal Server Error 
 Does not return a body.
 
@@ -219,14 +261,18 @@ Adds an item to the clipboard
 None
 
 #### Success Response
-201 Created
+200 OK
 ```
     { new_item : <new_item> }
 ```
 
 #### Error Response
+Status 401 Unauthorized
+``` 
+{ error : 'Unable to verity token' }
+```
 
-400 Bad Request (is this the corrrect error code?)
+422 Unprocessable Entity
 ```
     { error : 'could not create new board item' }
 ```
@@ -248,6 +294,11 @@ None
 ```
 
 #### Error Response
+Status 401 Unauthorized
+``` 
+{ error : 'Unable to verity token' }
+```
+
 404 Content Not Found
 ```
 { error : "boarditem not found" }
@@ -267,5 +318,10 @@ Status 204 No Content
 Does not return a body.
 
 #### Failure Response
+Status 401 Unauthorized
+``` 
+{ error : 'Unable to verity token' }
+```
+
 Status 500 Internal Server Error 
 Does not return a body.
