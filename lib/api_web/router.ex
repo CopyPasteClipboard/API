@@ -1,9 +1,12 @@
 defmodule ApiWeb.Router do
   use ApiWeb, :router
+  alias Auth
+  use Plug.ErrorHandler
 
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug(Auth)
   end
 
   # Other scopes may use custom stacks.
@@ -59,5 +62,9 @@ defmodule ApiWeb.Router do
       end
 
     end
+  end
+
+  def handle_errors(conn, %{kind: _kind, reason: reason, stack: _stack}) do
+    json conn, %{ "error" => reason.message }
   end
 end
