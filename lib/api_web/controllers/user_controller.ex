@@ -1,7 +1,8 @@
 defmodule ApiWeb.UserController do
     use ApiWeb, :controller
 
-    def getUser(conn, _params) do
+    def getUser(conn, params) do
+        IO.inspect params
         json conn, ["getUser"]
     end
   

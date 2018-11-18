@@ -1,70 +1,48 @@
 defmodule ApiWeb.Router do
   use ApiWeb, :router
   alias Auth
+  alias TokenExtract
   use Plug.ErrorHandler
-
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug(TokenExtract)
     plug(Auth)
   end
 
-  # Other scopes may use custom stacks.
-  scope "/api", ApiWeb do
+  # routes begin here
+  scope "/v1", ApiWeb do
     pipe_through :api
 
-    scope "/v1" do
-      scope "/user" do
-        # Gets the user’s profile information 
-        get "/:userid", UserController, :getUser
+    # user routes 
+    get "/user/:userid", UserController, :getUser
+    get "/user/:userid/clipboards", UserController, :getUserBoards
+    post "/user", UserController, :postUser
+    put "/user/:userid", UserController, :putUser
+    delete "/user/:userid", UserController, :deleteUser
 
-        # Gets the user’s clipboards
-        get "/:userid/clipboards", UserController, :getUserBoards
+    # clipboard routes
+    post "/clipboard", BoardController, :postBoard
+    put "/clipboard/:boardId", BoardController, :putBoard
 
-        # Creates a new user
-        post "/:userid", UserController, :postUser
+    # ?type=mostRecent || type=all
+    get "/clipboard/:boardId", BoardController, :getBoard
+    delete "/clipboard/:boardId", BoardController, :deleteBoard
+    delete "/clipboard/:boardID/clear", BoardController, :clearBoard
+    post "/clipboard/:boardId/boarditem", BoardController, :postBoardItem
 
-        # Updates a :userid’ profile information
-        put "/:userid", UserController, :putUser
+    # boarditem
+    get "/boarditem/:itemID", ItemController, :getItem
+    delete "/boarditem/:itemID", ItemController, :deleteItem
+  end
 
-        # Deletes a user from the database
-        delete "/:userid", UserController, :deleteUser
-      end
-
-      scope "/clipboard" do
-        # Creates a new clipboard for the user
-        post "/:boardId", BoardController, :postBoard
-
-        # Edits the clipboard (say, the clipboard name)
-        put "/:boardId", BoardController, :putBoard
-
-        # Gets all items currently in the clipboard
-        # needs parameters
-        # ?type=mostRecent || type=all
-        get "/:boardId", BoardController, :getBoard
-
-        # deletes the associated clipboard
-        delete "/:boardId", BoardController, :deleteBoard
-
-        # Clears the clipboard
-        delete "/:boardID/clear", BoardController, :clearBoard
-
-        # Adds an item to the clipboard
-        post "/:boardId/boarditem", BoardController, :postBoardItem
-      end
-
-      scope "/boarditem" do
-        # Gets the item associated with itemID
-        get "/:itemID", ItemController, :getItem
-
-        # Removes the board item associated with itemID
-        delete "/:itemID", ItemController, :deleteItem
-      end
-
+  # this, combined with the Plug.ErrorHandler allows for custom errors to be easily sent 
+  def handle_errors(conn, %{kind: _kind, reason: reason, stack: _stack}) do
+    if Map.has_key?(reason, :message) do
+      json conn, %{ "error" => reason.message }
+    else
+      json conn, [reason]
     end
   end
 
-  def handle_errors(conn, %{kind: _kind, reason: reason, stack: _stack}) do
-    json conn, %{ "error" => reason.message }
-  end
-end
+end   # end module

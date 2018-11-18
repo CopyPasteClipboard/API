@@ -1,4 +1,7 @@
 defmodule Auth do
+    @moduledoc """
+    A plug to provide authentication protection.
+    """
     defmodule UnauthorizedError do
         @moduledoc """
         Error raised by the module when the user could not
@@ -6,15 +9,15 @@ defmodule Auth do
         """
     
         defexception message: "unauthorized", plug_status: 401
-      end
+    end
     
-      def init(options), do: options
-    
-      def call(conn, opts) do
-        IO.puts "HELLO WORLD "
-        raise(UnauthorizedError)
+    def init(options), do: options
+
+    def call(conn, opts) do
+        # TODO: Add authorization logic here
         conn
-      end
+    end
+
 
   end
   
