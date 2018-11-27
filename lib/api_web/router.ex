@@ -6,8 +6,8 @@ defmodule ApiWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug(TokenExtract)
-    plug(Auth)
+    # plug(TokenExtract)
+    # plug(Auth)
   end
 
   # routes begin here
@@ -20,6 +20,8 @@ defmodule ApiWeb.Router do
     post "/user", UserController, :post_user
     put "/user/:userid", UserController, :put_user
     delete "/user/:userid", UserController, :delete_user
+
+    get "/user/:username", UserController, :get_user_by_username
 
     # clipboard routes
     post "/clipboard", BoardController, :post_board

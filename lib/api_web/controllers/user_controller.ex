@@ -11,15 +11,17 @@ defmodule ApiWeb.UserController do
 
         if !user do raise(NotFoundError) end
 
+        IO.inspect user
         conn
             |> put_status(:ok)
-            |> json(user)
+            |> json( %{ :id => user.id, :phone_number => user.phone_number, :username => user.username, :created=> user.inserted_at})
     end
   
     def get_user_boards(conn, params) do
-        id = params["userid"]
+        id = params["user_id"]
         boards = Api.PasteBoard.Queries.get_boards_for_user(id)
 
+        IO.inspect boards
         if boards === [] do raise(NotFoundError) end
 
         conn 
@@ -39,7 +41,8 @@ defmodule ApiWeb.UserController do
             # for now, assume all fields are valid
             {status, user} = Api.User.Queries.create_user(params)
 
-            # TODO: add error handling here
+            board_params = %{ :board_name => "default", :user_id => user.id }
+            board = Api.PasteBoard.Queries.create_board( board_params )
 
             conn
                 |> put_status(:ok)
