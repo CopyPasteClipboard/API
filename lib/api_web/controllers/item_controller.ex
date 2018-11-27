@@ -1,5 +1,6 @@
 defmodule ApiWeb.ItemController do
     use ApiWeb, :controller
+    alias Api.BoardItem
 
     defmodule NotFoundError do
         defexception message: "not found", plug_status: 404
@@ -8,7 +9,7 @@ defmodule ApiWeb.ItemController do
     def get_item(conn, params) do
         id = params["itemID"]
 
-        item = Api.BoardItem.Queries.get_item_by_id(id)
+        item = BoardItem.Queries.get_item_by_id(id)
 
         if !item do
             raise(NotFoundError)
@@ -16,7 +17,7 @@ defmodule ApiWeb.ItemController do
 
         conn
             |> put_status(:ok)
-            |> json(%{ :itemid => id, :boarditem => item })
+            |> json(BoardItem.render(item))
     end
 
     def delete_item(conn, params) do

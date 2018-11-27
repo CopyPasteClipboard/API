@@ -1,5 +1,7 @@
 defmodule ApiWeb.BoardController do
   use ApiWeb, :controller
+  alias Api.PasteBoard
+  alias Api.BoardItem
 
   defmodule NotFoundError do
       defexception message: "not found", plug_status: 404
@@ -17,11 +19,11 @@ defmodule ApiWeb.BoardController do
         |> put_status(:unprocessable_entity)
         |> json(%{ "error" => "must provide username and user_id"})
     else 
-      board = Api.PasteBoard.Queries.create_board(params)
+      board = PasteBoard.Queries.create_board(params)
 
       conn
         |>  put_status(:ok)
-        |>  json(Api.PasteBoard.render(board))
+        |>  json(PasteBoard.render(board))
     end
   end
 
@@ -34,13 +36,13 @@ defmodule ApiWeb.BoardController do
     else
       id = params["boardId"]
       query = Map.take(["board_name"], params)
-      board = Api.PasteBoard.Queries.update_board_by_id(id,query)
+      board = PasteBoard.Queries.update_board_by_id(id,query)
 
       # TODO : add error handling here
 
       conn
         |>  put_status(:ok)
-        |>  json( Api.PasteBoard.render(board) )
+        |>  json( PasteBoard.render(board) )
     end
   end
 
@@ -68,7 +70,7 @@ defmodule ApiWeb.BoardController do
   def delete_board(conn, params) do
     id = params["boardId"]
 
-    # status = Api.PasteBoard.Queries.delete_by_id(id)
+    # status = PasteBoard.Queries.delete_by_id(id)
 
     send_resp(conn, :no_content, "")
   end
@@ -76,7 +78,7 @@ defmodule ApiWeb.BoardController do
   def clear_board(conn, params) do
     id = params["boardId"]
 
-    # status = Api.PasteBoard.Queries.clear_board(id)
+    # status = PasteBoard.Queries.clear_board(id)
 
     send_resp(conn,:no_content, "")
   end
@@ -90,12 +92,11 @@ defmodule ApiWeb.BoardController do
       new_item = %{ :text_content => params["board_item"],
                     :board_id   =>  params["boardId"]}
 
-      board = Api.BoardItem.Queries.create_item(new_item)
-      IO.inspect board
-      
+      board = BoardItem.Queries.create_item(new_item)
+
       conn
         |>  put_status(:ok)
-        |>  json(Api.BoardItem.render(board))
+        |>  json(BoardItem.render(board))
     end
   end
 
@@ -109,7 +110,7 @@ defmodule ApiWeb.BoardController do
   end
 
   defp get_all(conn,params) do
-    items = Api.BoardItem.Queries.get_board_items(params["boardId"])
+    items = BoardItem.Queries.get_board_items(params["boardId"])
 
 
     # items = Enum.sort(items, fn (item1, item2) -> 

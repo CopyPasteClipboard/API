@@ -1,5 +1,7 @@
 defmodule ApiWeb.UserController do
     use ApiWeb, :controller
+    alias Api.PasteBoard
+    alias Api.User
 
     defmodule NotFoundError do
         defexception message: "not found", plug_status: 404
@@ -7,20 +9,20 @@ defmodule ApiWeb.UserController do
 
     def get_user(conn, params) do
         id = params["user_id"]
-        user = Api.User.Queries.get_user_by_id(id)
+        user = User.Queries.get_user_by_id(id)
 
         if !user do raise(NotFoundError) end
 
         IO.inspect user
         conn
             |> put_status(:ok)
-            |> json( Api.User.render(user))
+            |> json( User.render(user))
     end
   
     def get_user_boards(conn, params) do
         id = params["user_id"]
-        boards = Api.PasteBoard.Queries.get_boards_for_user(id) 
-            |> Enum.map(&Api.PasteBoard.render/1)
+        boards = PasteBoard.Queries.get_boards_for_user(id) 
+            |> Enum.map(&PasteBoard.render/1)
 
         if boards === [] do raise(NotFoundError) end
 
@@ -39,14 +41,14 @@ defmodule ApiWeb.UserController do
                 |> json(%{ "error" => "must provide username, password, and phone_number"})
         else
             # for now, assume all fields are valid
-            {status, user} = Api.User.Queries.create_user(params)
+            {status, user} = User.Queries.create_user(params)
 
             board_params = %{ :board_name => "default", :user_id => user.id }
-            board = Api.PasteBoard.Queries.create_board( board_params )
+            board = PasteBoard.Queries.create_board( board_params )
 
             conn
                 |> put_status(:ok)
-                |> json(Api.User.render(user))
+                |> json(User.render(user))
         end
     end
 
@@ -57,11 +59,11 @@ defmodule ApiWeb.UserController do
         if !query do
             send_resp(conn,204, "")
         else
-            user = Api.User.Queries.update_user_by_id(id, %{ "phone_number" => query })
+            user = User.Queries.update_user_by_id(id, %{ "phone_number" => query })
 
             conn 
                 |> put_status(:ok)
-                |> json(Api.User.render(user))
+                |> json(User.render(user))
         end
     end
 
@@ -69,7 +71,7 @@ defmodule ApiWeb.UserController do
         id = params["username"]
 
         # will cause compiler error about id being undefined for now
-        # status = Api.User.Queries.delete_user_by_id(id)
+        # status = User.Queries.delete_user_by_id(id)
 
         send_resp(conn,204, "")
     end
