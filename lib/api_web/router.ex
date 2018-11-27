@@ -22,18 +22,18 @@ defmodule ApiWeb.Router do
     delete "/user/:userid", UserController, :delete_user
 
     # clipboard routes
-    post "/clipboard", BoardController, :postBoard
-    put "/clipboard/:boardId", BoardController, :putBoard
+    post "/clipboard", BoardController, :post_board
+    put "/clipboard/:boardId", BoardController, :put_board
 
     # ?type=mostRecent || type=all
-    get "/clipboard/:boardId", BoardController, :getBoard
-    delete "/clipboard/:boardId", BoardController, :deleteBoard
-    delete "/clipboard/:boardID/clear", BoardController, :clearBoard
-    post "/clipboard/:boardId/boarditem", BoardController, :postBoardItem
+    get "/clipboard/:boardId", BoardController, :get_board
+    delete "/clipboard/:boardId", BoardController, :delete_board
+    delete "/clipboard/:boardId/clear", BoardController, :clear_board
+    post "/clipboard/:boardId/boarditem", BoardController, :post_board_item
 
     # boarditem
-    get "/boarditem/:itemID", ItemController, :getItem
-    delete "/boarditem/:itemID", ItemController, :deleteItem
+    get "/boarditem/:itemID", ItemController, :get_item
+    delete "/boarditem/:itemID", ItemController, :delete_item
   end
 
   # this, combined with the Plug.ErrorHandler allows for custom errors to be easily sent 

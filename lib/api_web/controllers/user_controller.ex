@@ -66,6 +66,7 @@ defmodule ApiWeb.UserController do
     def delete_user(conn, params) do
         id = params["username"]
 
+        # will cause compiler error about id being undefined for now
         # status = Api.User.Queries.delete_user_by_id(id)
 
         send_resp(conn,204, "")

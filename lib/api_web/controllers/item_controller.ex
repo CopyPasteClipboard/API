@@ -19,7 +19,7 @@ defmodule ApiWeb.ItemController do
             |> json(%{ :itemid => id, :boarditem => item })
     end
 
-    def deleteItem(conn, params) do
+    def delete_item(conn, params) do
         id = params["itemID"]
 
         # status = Api.BoardItem.Queries.delete_item_by_id(id)

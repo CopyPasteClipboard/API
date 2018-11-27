@@ -156,7 +156,7 @@ None
 #### Success Response
 200 OK
 ```
-    { boardname : <boardname>, userid: <userid> created_on : <created_on>, id : <board id>}
+    { board_name : <boardname>, user_id: <userid> created_on : <created_on>, id : <board id>}
 ```
 
 #### Error Response
@@ -183,7 +183,7 @@ None
 #### Success Response
 200 OK
 ```
-{ id : <boardid>, boardname : <boardname> }
+{ board_name : <boardname> }
 ```
 
 204 No Content (if nothing was created)
