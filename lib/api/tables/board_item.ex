@@ -20,4 +20,8 @@ defmodule Api.BoardItem do
     |> cast(attrs, @all_fields)
     |> validate_required(@all_fields)
   end
+
+  def render(board_item) do
+    %{:id => board_item.id, :text_content => board_item.text_content, :inserted_at => board_item.inserted_at}
+  end
 end

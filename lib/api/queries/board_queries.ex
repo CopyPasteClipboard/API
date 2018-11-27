@@ -9,7 +9,6 @@ defmodule Api.PasteBoard.Queries do
     end
 
     def get_boards_for_user(user_id) do
-        IO.inspect user_id
         from(b in PasteBoard)
         |> where([b], b.user_id == ^user_id)
         |> Repo.all()

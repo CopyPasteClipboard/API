@@ -19,4 +19,8 @@ defmodule Api.User do
     |> cast(attrs, [:username, :phone_number, :password_hash])
     |> validate_required([:username, :phone_number])
   end
+
+  def render(user_map) do
+    %{:id => user_map.id, :username => user_map.username, :inserted_at => user_map.inserted_at}
+  end
 end

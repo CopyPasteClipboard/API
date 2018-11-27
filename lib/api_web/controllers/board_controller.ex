@@ -21,7 +21,7 @@ defmodule ApiWeb.BoardController do
 
       conn
         |>  put_status(:ok)
-        |>  json(%{ :id => board.id, :board_name => board.board_name })
+        |>  json(Api.PasteBoard.render(board))
     end
   end
 
@@ -40,7 +40,7 @@ defmodule ApiWeb.BoardController do
 
       conn
         |>  put_status(:ok)
-        |>  json( %{ "board_name" => board.board_name} )
+        |>  json( Api.PasteBoard.render(board) )
     end
   end
 
@@ -90,12 +90,12 @@ defmodule ApiWeb.BoardController do
       new_item = %{ :text_content => params["board_item"],
                     :board_id   =>  params["boardId"]}
 
-      status = Api.BoardItem.Queries.create_item(new_item)
-      IO.inspect status
-
+      board = Api.BoardItem.Queries.create_item(new_item)
+      IO.inspect board
+      
       conn
         |>  put_status(:ok)
-        |>  json(%{ :new_item => status.text_content })
+        |>  json(Api.BoardItem.render(board))
     end
   end
 

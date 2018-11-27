@@ -14,13 +14,13 @@ defmodule ApiWeb.UserController do
         IO.inspect user
         conn
             |> put_status(:ok)
-            |> json( %{ :id => user.id, :phone_number => user.phone_number, :username => user.username, :created=> user.inserted_at})
+            |> json( Api.User.render(user))
     end
   
     def get_user_boards(conn, params) do
         id = params["user_id"]
         boards = Api.PasteBoard.Queries.get_boards_for_user(id) 
-            |> Enum.map(fn x -> %{:id => x.id, :board_name => x.board_name, :inserted_at => x.inserted_at} end)
+            |> Enum.map(&Api.PasteBoard.render/1)
 
         if boards === [] do raise(NotFoundError) end
 
@@ -46,7 +46,7 @@ defmodule ApiWeb.UserController do
 
             conn
                 |> put_status(:ok)
-                |> json(%{ :username => user.username, :id => user.id })
+                |> json(Api.User.render(user))
         end
     end
 
@@ -57,12 +57,11 @@ defmodule ApiWeb.UserController do
         if !query do
             send_resp(conn,204, "")
         else
-            status = Api.User.Queries.update_user_by_id(id, %{ "phone_number" => query })
+            user = Api.User.Queries.update_user_by_id(id, %{ "phone_number" => query })
 
-            ret = %{ :id => status.id, :phone_number => status.phone_number, 
-                        :created => status.updated_at}
-
-            json conn, ret
+            conn 
+                |> put_status(:ok)
+                |> json(Api.User.render(user))
         end
     end
 

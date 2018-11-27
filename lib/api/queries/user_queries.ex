@@ -11,6 +11,10 @@ defmodule Api.User.Queries do
     def get_user_by_id(id) do
         Repo.get(User, id)
     end
+
+    def get_user_by_username(username) do
+        Repo.get_by(User, username: username)
+    end
     
     def create_user(params) do
         User.changeset(%User{}, params)
@@ -27,4 +31,6 @@ defmodule Api.User.Queries do
         |> User.changeset(params)
         |> Repo.update!()
     end
+
+    
 end
