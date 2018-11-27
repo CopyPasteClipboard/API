@@ -3,7 +3,7 @@
 # API Documentation
 ## Users
 
-### GET /v1/user/:userid
+### GET /v1/user/:user_id
 Gets the user’s profile information 
 
 #### Body Params
@@ -30,7 +30,7 @@ Status 404 Content Not Found
 ```
 
 
-### GET /v1/user/:userid/clipboards
+### GET /v1/user/:user_id/clipboards
 Gets the user’s clipboards
 
 #### Body Params
@@ -93,8 +93,8 @@ Status 401 Unauthorized
     { error : 'invalid phone number' }
 ```
 
-### PUT /v1/user/:userid
-Updates a :userid’s profile information
+### PUT /v1/user/:user_id
+Updates a :user_id’s profile information
 
 #### Body Params
     - phone_number [optional]
@@ -118,7 +118,7 @@ Status 401 Unauthorized
 
 
 
-### DELETE /v1/user/:userid
+### DELETE /v1/user/:user_id
 Deletes a user from the database
 
 #### Body Params
@@ -148,7 +148,7 @@ Creates a new clipboard for the user
 
 #### Body Params
     - boardname (required)
-    - userid    (required)
+    - user_id    (required)
 
 #### Query Params
 None
@@ -156,7 +156,7 @@ None
 #### Success Response
 200 OK
 ```
-    { board_name : <boardname>, user_id: <userid> created_on : <created_on>, id : <board id>}
+    { board_name : <boardname>, user_id: <user_id> created_on : <created_on>, id : <board id>}
 ```
 
 #### Error Response

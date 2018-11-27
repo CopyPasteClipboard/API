@@ -15,7 +15,7 @@ defmodule ApiWeb.BoardController do
     if length(Map.keys(params)) !== 2 do
       conn 
         |> put_status(:unprocessable_entity)
-        |> json(%{ "error" => "must provide username and userid"})
+        |> json(%{ "error" => "must provide username and user_id"})
     else 
       board = Api.PasteBoard.Queries.create_board(params)
 

@@ -15,11 +15,11 @@ defmodule ApiWeb.Router do
     pipe_through :api
 
     # user routes 
-    get "/user/:userid", UserController, :get_user
-    get "/user/:userid/clipboards", UserController, :get_user_boards
+    get "/user/:user_id", UserController, :get_user
+    get "/user/:user_id/clipboards", UserController, :get_user_boards
     post "/user", UserController, :post_user
-    put "/user/:userid", UserController, :put_user
-    delete "/user/:userid", UserController, :delete_user
+    put "/user/:user_id", UserController, :put_user
+    delete "/user/:user_id", UserController, :delete_user
 
     get "/user/:username", UserController, :get_user_by_username
 

@@ -3,7 +3,6 @@ defmodule Api.BoardItem.Queries do
     import Ecto.Query
     alias Api.BoardItem
     alias Api.Repo
-    alias Api.User
     alias Api.PasteBoard
 
     def get_item_by_id(id) do

@@ -6,7 +6,7 @@ defmodule ApiWeb.UserController do
     end
 
     def get_user(conn, params) do
-        id = params["userid"]
+        id = params["user_id"]
         user = Api.User.Queries.get_user_by_id(id)
 
         if !user do raise(NotFoundError) end
@@ -19,14 +19,14 @@ defmodule ApiWeb.UserController do
   
     def get_user_boards(conn, params) do
         id = params["user_id"]
-        boards = Api.PasteBoard.Queries.get_boards_for_user(id)
+        boards = Api.PasteBoard.Queries.get_boards_for_user(id) 
+            |> Enum.map(fn x -> %{:id => x.id, :board_name => x.board_name, :inserted_at => x.inserted_at} end)
 
-        IO.inspect boards
         if boards === [] do raise(NotFoundError) end
 
-        conn 
+        value = conn 
             |> put_status(:ok)
-            |> json( boards )
+            |> json(boards)
     end
 
     def post_user(conn, params) do
@@ -51,7 +51,7 @@ defmodule ApiWeb.UserController do
     end
 
     def put_user(conn, params) do
-        id = params["userid"]
+        id = params["user_id"]
         query = params["phone_number"]
 
         if !query do
