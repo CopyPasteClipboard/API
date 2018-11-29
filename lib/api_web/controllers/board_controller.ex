@@ -52,6 +52,7 @@ defmodule ApiWeb.BoardController do
       and passed into the function inside params
   """
   def get_board(conn, params) do
+    
     cond do
       !Map.has_key?(params,"type") ->
         get_most_recent(conn,params)
@@ -105,18 +106,23 @@ defmodule ApiWeb.BoardController do
   #####################################################
 
   defp get_most_recent(conn,params) do
-    IO.puts "get_most_recent"
-    json conn, params
+    [item | _] = BoardItem.Queries.get_board_items(params["boardId"])
+      |> Enum.sort(&(&1.id >= &2.id))
+
+    formattedItem = BoardItem.render(item)
+
+    conn 
+      |> put_status(:ok)
+      |> json([formattedItem])
   end
 
   defp get_all(conn,params) do
     items = BoardItem.Queries.get_board_items(params["boardId"])
+      |> Enum.map(&BoardItem.render/1)
 
-
-    # items = Enum.sort(items, fn (item1, item2) -> 
-
-    # end)
-    json conn, params
+    conn
+      |> put_status(:ok)
+      |> json(items)
   end
 
 end

@@ -12,8 +12,7 @@ defmodule ApiWeb.UserController do
         user = User.Queries.get_user_by_id(id)
 
         if !user do raise(NotFoundError) end
-
-        IO.inspect user
+        
         conn
             |> put_status(:ok)
             |> json( User.render(user))
