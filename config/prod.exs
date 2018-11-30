@@ -10,9 +10,10 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :api, ApiWeb.Endpoint,
-  http: [:inet6, port: System.get_env("PORT") || 4000],
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  http: [port: {:system, "PORT"}],
+  url: [host: "localhost", port: {:system, "PORT"}], # This is critical for ensuring web-sockets properly authorize.
+  server: true,
+  root: "."
 
 # Do not print debug messages in production
 config :logger, level: :info
@@ -68,4 +69,11 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs which should be versioned
 # separately.
-import_config "prod.secret.exs"
+# import_config "prod.secret.exs"
+
+config :api, Api.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "api",
+  hostname: "localhost"

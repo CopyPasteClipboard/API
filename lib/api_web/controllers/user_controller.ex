@@ -25,7 +25,7 @@ defmodule ApiWeb.UserController do
 
         if boards === [] do raise(NotFoundError) end
 
-        value = conn 
+        conn 
             |> put_status(:ok)
             |> json(boards)
     end
@@ -43,10 +43,10 @@ defmodule ApiWeb.UserController do
             {status, user} = User.Queries.create_user(params)
 
             board_params = %{ :board_name => "default", :user_id => user.id }
-            board = PasteBoard.Queries.create_board( board_params )
+            _ = PasteBoard.Queries.create_board( board_params )
 
             conn
-                |> put_status(:ok)
+                |> put_status(status)
                 |> json(User.render(user))
         end
     end
