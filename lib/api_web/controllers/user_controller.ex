@@ -7,6 +7,18 @@ defmodule ApiWeb.UserController do
         defexception message: "not found", plug_status: 404
     end
 
+    def login(conn, params) do
+        username = params["username"]
+
+        if !username do raise(NotFoundError) end
+
+        user = User.Queries.get_user_by_username(username)
+
+        conn
+            |> put_status(:ok)
+            |> json( User.render(user))
+    end
+
     def get_user(conn, params) do
         id = params["user_id"]
         user = User.Queries.get_user_by_id(id)

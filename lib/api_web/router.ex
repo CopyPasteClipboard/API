@@ -21,6 +21,8 @@ defmodule ApiWeb.Router do
     put "/user/:user_id", UserController, :put_user
     delete "/user/:user_id", UserController, :delete_user
 
+    post "/login", UserController, :login
+
     get "/user/:username", UserController, :get_user_by_username
 
     # clipboard routes
