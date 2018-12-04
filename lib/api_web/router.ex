@@ -5,7 +5,7 @@ defmodule ApiWeb.Router do
   use Plug.ErrorHandler
 
   pipeline :api do
-    plug CORSPlug, origin: "http://localhost:4000"
+	plug Corsica, origins: "*", allow_headers: :all
     plug :accepts, ["json"]
     # plug(TokenExtract)
     # plug(Auth)

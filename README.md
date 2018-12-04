@@ -254,7 +254,7 @@ Adds an item to the clipboard
 
 #### Body Params
 ```
-{ new_item : <new_item>}
+{ board_item : <new_item>}
 ```
 
 #### Query Params
