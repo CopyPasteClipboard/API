@@ -69,7 +69,6 @@ config :phoenix, :plug_init_mode, :runtime
 # Configure your database
 config :api, Api.Repo,
   username: "clippy",
-  password: "",
   database: "api_dev",
   hostname: "localhost",
   pool_size: 10
