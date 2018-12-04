@@ -73,7 +73,7 @@ config :logger, level: :info
 
 config :api, Api.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "clippy",
+  password: "password",
   database: "api",
   hostname: "localhost"

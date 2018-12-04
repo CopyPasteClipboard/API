@@ -68,8 +68,8 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Configure your database
 config :api, Api.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "clippy",
+  password: "password",
   database: "api_dev",
   hostname: "localhost",
   pool_size: 10
